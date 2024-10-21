@@ -25,3 +25,38 @@ body {
     text-wrap: balance;
   }
 }
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+pre {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  overflow-x: auto; 
+  font-family: Consolas, monospace;
+}
+
+code {
+  color: #333;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+
+b {
+  font-weight: bold;
+}
+
+u {
+  text-decoration: underline;
+}
+
+li {
+  list-style: disc;
+  margin-left: 20px;
+}
