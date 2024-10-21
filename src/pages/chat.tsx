@@ -98,14 +98,20 @@ const SSEComponent: React.FC<SSEComponentProps> = () => {
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     if (values.message) {
       getChat(values.message ?? "");
+      scrollRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
     }
     form.setFieldValue("message", undefined);
+  };
+
+  const handleOnClear = () => {
+    removeValue();
   };
 
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
+
         <Menu
           theme="dark"
           mode="inline"
@@ -156,7 +162,11 @@ const SSEComponent: React.FC<SSEComponentProps> = () => {
                         <Title id={message.dt} level={4}>
                           {message.message}
                         </Title>
-                        <Markdown rehypePlugins={[rehypeHighlight]}>
+
+                        <Markdown
+                          className="typewriter"
+                          rehypePlugins={[rehypeHighlight]}
+                        >
                           {message.result}
                         </Markdown>
                       </Card>
@@ -167,28 +177,27 @@ const SSEComponent: React.FC<SSEComponentProps> = () => {
               <div ref={scrollRef}></div>
             </Col>
             <Col span={24}>
-              <Form
-                onFinish={onFinish}
-                // onFinishFailed={onFinishFailed}
-                form={form}
-              >
+              <Form onFinish={onFinish} form={form}>
                 <Row gutter={[6, 6]} justify="space-between">
-                  <Col flex={"90%"}>
+                  <Col flex={"80%"}>
                     <Form.Item<FieldType> label="Message" name="message">
                       <Input />
                     </Form.Item>
                   </Col>
                   <Col flex={"10%"}>
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        block
-                        loading={loading}
-                      >
-                        Send
-                      </Button>
-                    </Form.Item>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      loading={loading}
+                      block
+                    >
+                      Send
+                    </Button>
+                  </Col>
+                  <Col flex={"10%"}>
+                    <Button type="primary" danger block onClick={handleOnClear}>
+                      Clear
+                    </Button>
                   </Col>
                 </Row>
               </Form>
