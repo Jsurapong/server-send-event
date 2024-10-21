@@ -21,9 +21,11 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
+    "react-typed": "^2.0.12",
     "rehype-highlight": "^7.0.0",
     "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.0"
+    "remark-gfm": "^4.0.0",
+    "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",

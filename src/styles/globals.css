@@ -28,7 +28,7 @@ body {
 
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth !important;
 }
 
 pre {
@@ -36,7 +36,7 @@ pre {
   padding: 10px;
   border: 1px solid #ccc;
   overflow-x: auto; 
-  font-family: Consolas, monospace;
+  border-radius:22px;
 }
 
 code {
