@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import localFont from "next/font/local";
+import { Line } from "@/components/chart";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,9 +18,12 @@ interface SSEComponentProps {
 
 const sseUrl = "http://localhost:3000/api/stream";
 const SSEComponent: React.FC<SSEComponentProps> = () => {
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<{ dt: string; value: number }[]>([]);
+
   const [isConnected, setIsConnected] = useState(false);
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
+
+  console.log({ messages });
 
   useEffect(() => {
     const source = new EventSource(sseUrl);
@@ -30,8 +34,8 @@ const SSEComponent: React.FC<SSEComponentProps> = () => {
     };
 
     source.onmessage = (event) => {
-      console.log("on message", event);
-      setMessages((prevMessages) => [...prevMessages, event.data]);
+      // console.log("on message", event);
+      setMessages((prevMessages) => [...prevMessages, JSON.parse(event.data)]);
     };
 
     source.onerror = () => {
@@ -63,7 +67,7 @@ const SSEComponent: React.FC<SSEComponentProps> = () => {
       className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
     >
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div>
+        {/* <div>
           <h1>Example Server Sent Event</h1>
           <div>
             <button
@@ -87,7 +91,23 @@ const SSEComponent: React.FC<SSEComponentProps> = () => {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
+        <Line
+          width="600px"
+          height="500px"
+          data={{
+            labels: messages.map((i) => i.dt),
+            datasets: [
+              {
+                label: "My First Dataset",
+                data: messages.map((i) => i.value),
+                fill: false,
+                borderColor: "rgb(75, 192, 192)",
+                tension: 0.1,
+              },
+            ],
+          }}
+        />
       </main>
     </div>
   );

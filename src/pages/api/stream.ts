@@ -17,11 +17,15 @@ export default async function handler(
 
   const interval = setInterval(() => {
     const randomNumber = Math.floor(Math.random() * 100); // Generate a random number between 0 and 99
+    const datetime = new Date();
 
-    res.write(`data: ${randomNumber}\n\n`);
+    // res.write(`data: ${randomNumber}\n\n`);
     const event = {
       name: "message",
-      data: `Hello, this is message datetime ${randomNumber}`,
+      data: JSON.stringify({
+        dt: datetime.toISOString(),
+        value: randomNumber,
+      }),
       id: randomNumber,
     };
 
